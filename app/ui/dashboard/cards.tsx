@@ -1,8 +1,10 @@
+import { customers, invoices } from "@/app/lib/placeholder-data";
 import { ReactNode } from "react";
 
 interface Card {
   title: string;
   icon: ReactNode;
+  getValue: () => number;
 }
 
 const cards: Card[] = [
@@ -24,6 +26,10 @@ const cards: Card[] = [
         />
       </svg>
     ),
+    getValue: () =>
+      invoices
+        .filter((inv) => inv.status === "paid")
+        .reduce((sum, inv) => sum + inv.amount, 0),
   },
   {
     title: "Pending",
@@ -43,6 +49,10 @@ const cards: Card[] = [
         />
       </svg>
     ),
+    getValue: () =>
+      invoices
+        .filter((inv) => inv.status === "pending")
+        .reduce((sum, inv) => sum + inv.amount, 0),
   },
   {
     title: "Total Invoices",
@@ -62,6 +72,7 @@ const cards: Card[] = [
         />
       </svg>
     ),
+    getValue: () => invoices.length,
   },
   {
     title: "Total Customers",
@@ -81,14 +92,20 @@ const cards: Card[] = [
         />
       </svg>
     ),
+    getValue: () => customers.length,
   },
 ];
 
 export default function Cards() {
   return (
-    <div className="mt-4 grid gap-2 md:grid-cols-2 grid-cols-1 lg:grid-cols-4">
+    <div className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
       {cards.map((card) => (
-        <Card title={card.title} icon={card.icon} value={1} key={card.title} />
+        <Card
+          title={card.title}
+          icon={card.icon}
+          value={card.getValue()}
+          key={card.title}
+        />
       ))}
     </div>
   );

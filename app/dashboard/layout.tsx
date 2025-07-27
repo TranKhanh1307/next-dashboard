@@ -8,7 +8,7 @@ export default function Layout({
   return (
     <div className="md:h-full space-y-8 p-2 md:flex md:gap-8">
       <SideNav />
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 md:overflow-y-auto">{children}</div>
     </div>
   );
 }
