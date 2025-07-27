@@ -1,0 +1,14 @@
+import SideNav from "../ui/dashboard/sidenav";
+
+export default function Layout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <div className="md:h-full space-y-8 p-2 md:flex md:gap-8">
+      <SideNav />
+      <div className="flex-1">{children}</div>
+    </div>
+  );
+}
