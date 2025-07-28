@@ -4,7 +4,7 @@ import NavLinks from "./navlinks";
 
 export default function SideNav() {
   return (
-    <div className="flex w-full flex-col gap-2 md:h-full md:w-64">
+    <nav className="flex w-full flex-col gap-2 md:h-full md:w-64">
       <Link href={"/dashboard"}>
         <AcmeLogo />
       </Link>
@@ -29,6 +29,6 @@ export default function SideNav() {
           <p className="hidden md:block">Sign Out</p>
         </button>
       </div>
-    </div>
+    </nav>
   );
 }

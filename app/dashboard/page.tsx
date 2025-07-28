@@ -1,7 +1,9 @@
 import Cards from "../ui/dashboard/cards";
+import LatestInvoices from "../ui/dashboard/latest-invoices";
+import RevenueChart from "../ui/dashboard/revenue-chart";
 import Table from "../ui/dashboard/table";
 
-export default function Dashboard() {
+export default function Page() {
   return (
     <div>
       <h2>Dashboard</h2>
@@ -27,7 +29,7 @@ export default function Dashboard() {
           }
           timeDesc="Last 12 months"
         >
-          {<></>}
+          {<RevenueChart />}
         </Table>
         <Table
           title={"Latest Invoices"}
@@ -49,7 +51,7 @@ export default function Dashboard() {
           }
           timeDesc="Updated just now"
         >
-          {<></>}
+          {<LatestInvoices />}
         </Table>
       </div>
     </div>

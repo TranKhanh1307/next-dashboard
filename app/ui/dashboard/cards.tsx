@@ -1,10 +1,17 @@
-import { customers, invoices } from "@/app/lib/placeholder-data";
+import { fetchCardData } from "@/app/lib/data";
 import { ReactNode } from "react";
 
 interface Card {
   title: string;
   icon: ReactNode;
-  getValue: () => number;
+  getValue: (data: CardData) => number | string;
+}
+
+interface CardData {
+  numberOfCustomers: number;
+  numberOfInvoices: number;
+  totalPaidInvoices: string;
+  totalPendingInvoices: string;
 }
 
 const cards: Card[] = [
@@ -26,10 +33,7 @@ const cards: Card[] = [
         />
       </svg>
     ),
-    getValue: () =>
-      invoices
-        .filter((inv) => inv.status === "paid")
-        .reduce((sum, inv) => sum + inv.amount, 0),
+    getValue: (data) => data.totalPaidInvoices,
   },
   {
     title: "Pending",
@@ -49,10 +53,7 @@ const cards: Card[] = [
         />
       </svg>
     ),
-    getValue: () =>
-      invoices
-        .filter((inv) => inv.status === "pending")
-        .reduce((sum, inv) => sum + inv.amount, 0),
+    getValue: (data) => data.totalPaidInvoices,
   },
   {
     title: "Total Invoices",
@@ -72,7 +73,7 @@ const cards: Card[] = [
         />
       </svg>
     ),
-    getValue: () => invoices.length,
+    getValue: (data) => data.numberOfInvoices,
   },
   {
     title: "Total Customers",
@@ -92,18 +93,20 @@ const cards: Card[] = [
         />
       </svg>
     ),
-    getValue: () => customers.length,
+    getValue: (data) => data.numberOfCustomers,
   },
 ];
 
-export default function Cards() {
+export default async function Cards() {
+  const data = await fetchCardData();
+
   return (
     <div className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
       {cards.map((card) => (
         <Card
           title={card.title}
           icon={card.icon}
-          value={card.getValue()}
+          value={card.getValue(data)}
           key={card.title}
         />
       ))}
