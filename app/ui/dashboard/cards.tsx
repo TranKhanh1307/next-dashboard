@@ -53,7 +53,7 @@ const cards: Card[] = [
         />
       </svg>
     ),
-    getValue: (data) => data.totalPaidInvoices,
+    getValue: (data) => data.totalPendingInvoices,
   },
   {
     title: "Total Invoices",
