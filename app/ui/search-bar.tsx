@@ -31,11 +31,15 @@ export default function SearchBar({ placeholder }: { placeholder: string }) {
         placeholder={placeholder}
         className="w-full outline-none"
         onChange={(e) => {
-          const params = new URLSearchParams(searchParams.toString());
-          params.set("query", e.target.value);
-
+          const params = new URLSearchParams(searchParams);
+          if (e.target.value) {
+            params.set("query", e.target.value);
+          } else {
+            params.delete("query");
+          }
           router.replace(`${pathname}?${params.toString()}`);
         }}
+        defaultValue={searchParams.get('query')?.toString()}
       />
     </div>
   );
