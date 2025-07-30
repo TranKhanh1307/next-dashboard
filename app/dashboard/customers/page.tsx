@@ -2,6 +2,7 @@ import { fetchFilteredCustomers } from "@/app/lib/data";
 import Cards from "@/app/ui/customers/cards";
 import Table from "@/app/ui/customers/table";
 import SearchBar from "@/app/ui/search-bar";
+import { Suspense } from "react";
 
 export default async function Page({
   searchParams,
@@ -13,7 +14,9 @@ export default async function Page({
   return (
     <div className="space-y-4">
       <h2>Customers</h2>
-      <SearchBar placeholder={"Search customers..."} />
+      <Suspense>
+        <SearchBar placeholder={"Search customers..."} />
+      </Suspense>
       <Cards customers={customers} /> {/*Hidden on large screen*/}
       <Table customers={customers} /> {/*Hidden on mobile*/}
     </div>
