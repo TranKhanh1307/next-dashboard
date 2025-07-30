@@ -1,63 +1,59 @@
 import { AVATAR_SIZE } from "@/app/lib/constants";
-import { fetchFilteredCustomers } from "@/app/lib/data";
+import { FormattedCustomersTable } from "@/app/lib/definitions";
 import Image from "next/image";
 
-export default async function Table({ query }: { query: string }) {
-  const customers = await fetchFilteredCustomers(query);
+const headers = [
+  "Name",
+  "Email",
+  "Total Invoices",
+  "Total Pending",
+  "Total Paid",
+];
+
+export default async function Table({
+  customers,
+}: {
+  customers: FormattedCustomersTable[];
+}) {
   return (
-    <div className="space-y-3 rounded-md bg-gray-200 p-2">
-      {customers.map((customer) => (
-        <div key={customer.id} className="rounded-md bg-white p-3">
-          <CustomerInfo
-            imageUrl={customer.image_url}
-            name={customer.name}
-            email={customer.email}
-          />
-          <InvoiceInfo
-            pending={customer.total_pending}
-            paid={customer.total_paid}
-            totalInvoices={customer.total_invoices}
-          />
-        </div>
-      ))}
+    <div className="hidden overflow-x-auto rounded-md bg-gray-200 p-2 md:block">
+      <table className="w-full">
+        <thead>
+          <tr>
+            {headers.map((header) => (
+              <th key={header}>{header}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {customers.map((customer) => (
+            <CustomerRow customer={customer} key={customer.id} />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
 
-function InvoiceInfo({
-  pending,
-  paid,
-  totalInvoices,
-}: {
-  pending: string;
-  paid: string;
-  totalInvoices: number;
-}) {
-  return <div></div>;
-}
-
-function CustomerInfo({
-  imageUrl,
-  name,
-  email,
-}: {
-  imageUrl: string;
-  name: string;
-  email: string;
-}) {
+function CustomerRow({ customer }: { customer: FormattedCustomersTable }) {
   return (
-    <div className="space-y-2 border-b-[1px] border-gray-200 pb-4">
-      <div className="flex items-center gap-2">
-        <Image
-          src={imageUrl}
-          alt={name}
-          width={AVATAR_SIZE}
-          height={AVATAR_SIZE}
-          className="rounded-full"
-        />
-        <p>{name}</p>
-      </div>
-      <p className="text-gray-600">{email}</p>
-    </div>
+    <tr className="border-b-[1px] border-gray-200 bg-white">
+      <td className="whitespace-nowrap">
+        <div className="flex items-center gap-2">
+          <Image
+            src={customer.image_url}
+            alt={customer.name}
+            width={AVATAR_SIZE}
+            height={AVATAR_SIZE}
+            className="rounded-full"
+          />
+          <p className="mr-4">{customer.name}</p>
+        </div>
+      </td>
+      <td>{customer.email}</td>
+      <td>{customer.total_invoices}</td>
+      <td>{customer.total_pending}</td>
+      <td>{customer.total_paid}</td>
+    </tr>
   );
 }

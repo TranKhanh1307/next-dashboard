@@ -24,15 +24,23 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
 @layer base {
   h1 {
     font-size: var(--text-2xl);
     font-weight: bold;
   }
+
   h2 {
     font-size: var(--text-xl);
   }
+
   button {
     cursor: pointer;
+  }
+
+  th,
+  td {
+    @apply p-4 text-left
   }
 }
