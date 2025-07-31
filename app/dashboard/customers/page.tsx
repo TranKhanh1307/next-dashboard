@@ -1,7 +1,8 @@
 import { fetchFilteredCustomers } from "@/app/lib/data";
-import Cards from "@/app/ui/customers/cards";
+import CardListWrapper from "@/app/ui/common/card-list-wrapper";
+import SearchBar from "@/app/ui/common/search-bar";
+import CustomerCard from "@/app/ui/customers/card";
 import Table from "@/app/ui/customers/table";
-import SearchBar from "@/app/ui/search-bar";
 import { Suspense } from "react";
 
 export default async function Page({
@@ -17,7 +18,12 @@ export default async function Page({
       <Suspense>
         <SearchBar placeholder={"Search customers..."} />
       </Suspense>
-      <Cards customers={customers} /> {/*Hidden on large screen*/}
+      {/*Hidden on large screen*/}
+      <CardListWrapper>
+        {customers.map((customer) => (
+          <CustomerCard customer={customer} key={customer.id} />
+        ))}
+      </CardListWrapper>
       <Table customers={customers} /> {/*Hidden on mobile*/}
     </div>
   );
