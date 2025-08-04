@@ -3,7 +3,7 @@ import clsx from "clsx";
 export default function Status({ status }: { status: "pending" | "paid" }) {
   return (
     <div
-      className={clsx("flex items-center gap-2 rounded-full px-2 py-1", {
+      className={clsx("flex w-fit items-center gap-2 rounded-full px-2 py-1", {
         "bg-green-400 text-white": status === "paid",
         "bg-gray-200 text-gray-600": status === "pending",
       })}

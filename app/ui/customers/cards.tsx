@@ -1,12 +1,27 @@
 import { FormattedCustomersTable } from "@/app/lib/definitions";
 import CustomerInfo from "../common/customer-info";
 import CardContainer from "../common/card-container";
+import { fetchFilteredCustomers } from "@/app/lib/data";
+import CardListWrapper from "../common/card-list-wrapper";
 
-export default function CustomerCard({
-  customer,
+export default async function CardList({
+  query,
+  page,
 }: {
-  customer: FormattedCustomersTable;
+  query: string;
+  page: number;
 }) {
+  const customers = await fetchFilteredCustomers(query);
+  return (
+    <CardListWrapper>
+      {customers.map((customer) => (
+        <CustomerCard customer={customer} key={customer.id} />
+      ))}
+    </CardListWrapper>
+  );
+}
+
+function CustomerCard({ customer }: { customer: FormattedCustomersTable }) {
   return (
     <CardContainer>
       <CustomerInfo

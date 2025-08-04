@@ -13,7 +13,9 @@ export default function TableWrapper({
         <thead>
           <tr>
             {headers.map((header) => (
-              <th key={header}>{header}</th>
+              <th className="whitespace-nowrap" key={header}>
+                {header}
+              </th>
             ))}
           </tr>
         </thead>

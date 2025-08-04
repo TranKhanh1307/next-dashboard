@@ -2,22 +2,19 @@ import { FormattedCustomersTable } from "@/app/lib/definitions";
 import TableWrapper from "../common/table-wrapper";
 import CustomerNameCell from "../common/customer-name-cell";
 import BodyRow from "../common/table-rows";
-
-const headers = [
-  "Name",
-  "Email",
-  "Total Invoices",
-  "Total Pending",
-  "Total Paid",
-];
+import { customerTableHeaders } from "@/app/lib/constants";
+import { fetchFilteredCustomers } from "@/app/lib/data";
 
 export default async function Table({
-  customers,
+  query,
+  page,
 }: {
-  customers: FormattedCustomersTable[];
+  query: string;
+  page: number;
 }) {
+  const customers = await fetchFilteredCustomers(query);
   return (
-    <TableWrapper headers={headers}>
+    <TableWrapper headers={customerTableHeaders}>
       {customers.map((customer) => (
         <CustomerRow customer={customer} key={customer.id} />
       ))}

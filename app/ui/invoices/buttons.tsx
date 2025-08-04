@@ -29,7 +29,7 @@ export function EditInvoice() {
   return (
     <Link
       href={""}
-      className="flex items-center justify-center rounded-md border-[1px] border-gray-200 p-2"
+      className="flex items-center justify-center rounded-md border-[1px] border-gray-200 p-2 hover:bg-gray-400"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ export function DeleteInvoice() {
     <form action="">
       <button
         type="submit"
-        className="flex items-center justify-center rounded-md border-[1px] border-gray-200 p-2"
+        className="flex items-center justify-center rounded-md border-[1px] border-gray-200 p-2 hover:bg-gray-400"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
