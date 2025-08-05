@@ -14,6 +14,16 @@ export default function SearchBar({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const handleSearch = (term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("query", term);
+    } else {
+      params.delete("query");
+    }
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <div
       className={clsx(
@@ -43,13 +53,7 @@ export default function SearchBar({
         placeholder={placeholder}
         className="w-full outline-none"
         onChange={(e) => {
-          const params = new URLSearchParams(searchParams);
-          if (e.target.value) {
-            params.set("query", e.target.value);
-          } else {
-            params.delete("query");
-          }
-          router.replace(`${pathname}?${params.toString()}`);
+          handleSearch(e.target.value);
         }}
         defaultValue={searchParams.get("query")?.toString()}
       />

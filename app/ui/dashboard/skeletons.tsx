@@ -1,6 +1,4 @@
 import { renderMultiple } from "@/app/lib/utils";
-import CardListWrapper from "../common/card-list-wrapper";
-import CardContainer from "../common/card-container";
 
 // Loading animation
 const shimmer =
