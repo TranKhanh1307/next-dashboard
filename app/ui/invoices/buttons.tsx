@@ -3,7 +3,7 @@ import Link from "next/link";
 export function CreateInvoice() {
   return (
     <Link
-      href={""}
+      href={"/dashboard/invoices/create"}
       className="flex items-center justify-center gap-2 rounded-md bg-blue-600 p-3 text-white hover:bg-blue-400"
     >
       <p className="hidden md:block">Create invoices</p>

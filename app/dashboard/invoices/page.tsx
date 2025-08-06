@@ -23,11 +23,11 @@ export default async function Page({
         <SearchBar placeholder={"Search Invoices"} className="flex-1" />
         <CreateInvoice />
       </div>
-      <Suspense fallback={<CardsSkeleton />}>
+      <Suspense key={`cards-${query}-${curPage}`} fallback={<CardsSkeleton />}>
         {/*Hidden on large screen*/}
         <CardList query={query} page={curPage} />
       </Suspense>
-      <Suspense fallback={<TableSkeleton />}>
+      <Suspense key={`table-${query}-${curPage}`} fallback={<TableSkeleton />}>
         <Table query={query} page={curPage} /> {/*Hidden on mobile*/}
       </Suspense>
       <PaginationBar totalPages={totalPages} />

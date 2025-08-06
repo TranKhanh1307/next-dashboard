@@ -18,26 +18,28 @@ export default function PaginationBar({ totalPages }: { totalPages: number }) {
   };
 
   return (
-    <div className="inline-flex">
-      <PageArrow
-        direction={"left"}
-        href={createPageURL(curPage - 1)}
-        isDisabled={curPage === 1}
-      />
-      {allPages.map((page, index) => (
-        <PageNumber
-          key={`${page}-${index}`}
-          href={createPageURL(page)}
-          page={page}
-          curPage={curPage}
-          pos={"first"}
+    <div className="flex items-center justify-center">
+      <div className="inline-flex">
+        <PageArrow
+          direction={"left"}
+          href={createPageURL(curPage - 1)}
+          isDisabled={curPage === 1}
         />
-      ))}
-      <PageArrow
-        direction={"right"}
-        href={createPageURL(curPage + 1)}
-        isDisabled={curPage === totalPages}
-      />
+        {allPages.map((page, index) => (
+          <PageNumber
+            key={`${page}-${index}`}
+            href={createPageURL(page)}
+            page={page}
+            curPage={curPage}
+            totalPages={totalPages}
+          />
+        ))}
+        <PageArrow
+          direction={"right"}
+          href={createPageURL(curPage + 1)}
+          isDisabled={curPage === totalPages}
+        />
+      </div>
     </div>
   );
 }
@@ -46,21 +48,20 @@ function PageNumber({
   href,
   page,
   curPage,
-  pos,
+  totalPages,
 }: {
   href: string;
   page: string | number;
   curPage: number;
-  pos: "first" | "middle" | "last";
+  totalPages: number;
 }) {
   return (
     <Link
       className={clsx(
         "flex size-10 items-center justify-center border-1 border-gray-200 p-2 hover:bg-blue-400 hover:text-white",
         { "bg-blue-400 text-white": page === curPage },
-        { "rounded-l-md": pos === "first" },
-        { "": pos === "middle" },
-        { "rounded-r-md": pos === "last" },
+        { "rounded-l-md": page === 1 },
+        { "rounded-r-md": page === totalPages },
       )}
       href={href}
     >
@@ -111,16 +112,17 @@ function PageArrow({
       </svg>
     );
 
-  return (
-    <Link
-      className={clsx("size-10 rounded-md border-1 border-gray-200 p-2", {
-        "mr-3": direction === "left",
-        "ml-3": direction === "right",
-        "hover:bg-gray-300": !isDisabled,
-        "cursor-not-allowed opacity-50 hover:bg-transparent": isDisabled,
-      })}
-      href={href}
-    >
+  const className = clsx("size-10 rounded-md border-1 border-gray-200 p-2", {
+    "mr-3": direction === "left",
+    "ml-3": direction === "right",
+    "hover:bg-gray-300": !isDisabled,
+    "cursor-not-allowed opacity-50 hover:bg-transparent": isDisabled,
+  });
+
+  return isDisabled ? (
+    <div className={className}>{icon}</div>
+  ) : (
+    <Link href={href} className={className}>
       {icon}
     </Link>
   );
