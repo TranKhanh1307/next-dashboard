@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function SearchBar({
   placeholder,
@@ -14,17 +15,16 @@ export default function SearchBar({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const handleSearch = (term: string) => {
+  const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
+    params.set("page", "1");
     if (term) {
       params.set("query", term);
-      params.delete("page");
     } else {
       params.delete("query");
-      params.delete("page");
     }
     router.replace(`${pathname}?${params.toString()}`);
-  };
+  }, 300);
 
   return (
     <div
