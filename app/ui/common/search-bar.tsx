@@ -29,7 +29,7 @@ export default function SearchBar({
   return (
     <div
       className={clsx(
-        "flex items-center gap-2 rounded-md border-2 border-gray-200 py-3 pl-3 focus-within:border-blue-400",
+        "flex items-center gap-2 rounded-md border-2 border-gray-200 pl-3 focus-within:border-blue-400",
         className,
       )}
     >
@@ -53,7 +53,7 @@ export default function SearchBar({
         name={placeholder}
         id={placeholder}
         placeholder={placeholder}
-        className="w-full outline-none"
+        className="w-full py-3 outline-none"
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
