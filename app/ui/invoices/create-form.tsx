@@ -1,6 +1,8 @@
 import { createInvoice } from "@/app/lib/action";
 import Status from "./status";
 import { fetchCustomers } from "@/app/lib/data";
+import { SelectInput, TextInput } from "../common/custom-inputs";
+import { Button } from "../common/custom-buttons";
 
 const dollarIcon = (
   <svg
@@ -9,7 +11,7 @@ const dollarIcon = (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-gray-400"
+    className="size-5"
   >
     <path
       strokeLinecap="round"
@@ -39,59 +41,33 @@ const personIcon = (
 export default async function Form() {
   const customers = await fetchCustomers();
   return (
-    <form action={createInvoice} className="flex flex-col">
+    <form action={createInvoice} className="space-y-4">
       <div className="space-y-3 rounded-md bg-gray-100 p-3">
-        <CustomerInput names={customers.map((customer) => customer.name)} />
-        <AmountInput />
+        <SelectInput
+          placeholder="Select a customer"
+          id="customer"
+          name="customerId"
+          label="Choose customer"
+          icon={personIcon}
+          values={customers.map((customer) => ({
+            value: customer.id,
+            label: customer.name,
+          }))}
+        />
+        <TextInput
+          icon={dollarIcon}
+          label={"Choose an amount"}
+          id={"amount"}
+          name={"amount"}
+          placeholder={"Enter USD amount"}
+        />
         <StatusInput />
       </div>
+      <div className="flex justify-end gap-2">
+        <Button secondary text={"Cancel"} />
+        <Button primary text={"Create invoices"} />
+      </div>
     </form>
-  );
-}
-
-function CustomerInput({ names }: { names: string[] }) {
-  return (
-    <div>
-      <label htmlFor="customer">Choose customer</label>
-      <div className="flex items-center gap-2 rounded-md border border-gray-200 bg-white pl-3 focus-within:border-blue-400">
-        {personIcon}
-        <select
-          name="customer"
-          id="customer"
-          className="w-full py-3 outline-none"
-          defaultValue={names[0]}
-          required
-        >
-          <option value="" disabled>
-            Select a customer
-          </option>
-          {names.map((name) => (
-            <option value={name} key={name}>
-              {name}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
-  );
-}
-
-function AmountInput() {
-  return (
-    <div>
-      <label htmlFor="amount">Choose an amount</label>
-      <div className="relative">
-        <input
-          id="amount"
-          name="amount"
-          type="text"
-          placeholder="Enter USD amount"
-          className="w-full rounded-md border border-gray-200 bg-white py-3 pl-10 outline-none focus:border-blue-400"
-          required
-        />
-        {dollarIcon}
-      </div>
-    </div>
   );
 }
 
@@ -100,7 +76,7 @@ function StatusInput() {
     <fieldset className="space-y-2">
       <legend>Set the invoice status</legend>
       <div className="flex gap-3 rounded-md border border-gray-200 bg-white p-3">
-        <RadioBtn value={"pending"} checked />
+        <RadioBtn value={"pending"} />
         <RadioBtn value={"paid"} />
       </div>
     </fieldset>
