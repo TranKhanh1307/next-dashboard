@@ -1,104 +1,121 @@
+import { getPaddingClass } from "@/app/lib/utils";
+import clsx from "clsx";
 import { ChangeEvent, ReactNode } from "react";
-import { pl } from "zod/locales";
 
-type BaseProps = {
-  icon: ReactNode;
-  label?: string;
+interface BaseInputProps {
   id?: string;
   name?: string;
+  defaultValue?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   className?: string;
-};
+  placeholder?: string;
+  leadingIcon?: ReactNode;
+  trailingIcon?: ReactNode;
+  required?: boolean;
+}
 
-function BaseInputWrapper({
-  icon,
-  label,
-  id,
+interface InputWrapperProps extends BaseInputProps {
+  children: ReactNode;
+}
+
+interface TextFieldProps extends BaseInputProps {
+  type:
+    | "button"
+    | "checkbox"
+    | "color"
+    | "date"
+    | "datetime-local"
+    | "email"
+    | "file"
+    | "hidden"
+    | "image"
+    | "month"
+    | "number"
+    | "password"
+    | "radio"
+    | "range"
+    | "reset"
+    | "search"
+    | "submit"
+    | "tel"
+    | "text"
+    | "time"
+    | "url"
+    | "week";
+}
+
+interface SelectFieldProps extends BaseInputProps {
+  options: { label: string; value: string }[];
+}
+
+const baseInputClass =
+  "w-full rounded-md bg-white py-3 outline outline-gray-200 focus:outline-blue-400";
+const baseIconClass =
+  "pointer-events-none absolute top-1/2 -translate-y-1/2 text-gray-400";
+
+function InputWrapper({
+  leadingIcon,
+  trailingIcon,
   className,
   children,
-}: BaseProps & { children: ReactNode }) {
+}: InputWrapperProps) {
   return (
-    <div className={className}>
-      {label && (
-        <label htmlFor={id} className="mb-2 md:inline-block">
-          {label}
-        </label>
+    <div className={clsx("relative", className)}>
+      {leadingIcon && (
+        <span className={clsx(baseIconClass, "left-3")}>{leadingIcon}</span>
       )}
-      <div className="relative">
-        {children}
-        <span className="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-gray-400">
-          {icon}
-        </span>
-      </div>
+      {children}
+      {trailingIcon && (
+        <span className={clsx(baseIconClass, "right-3")}>{trailingIcon}</span>
+      )}
     </div>
   );
 }
-
-export function TextInput({
-  icon,
-  label,
-  id,
-  name,
-  placeholder,
-  defaultValue,
+export function OutlinedTextField({
+  leadingIcon,
+  trailingIcon,
   className,
-  onChange,
-}: BaseProps & {
-  placeholder: string;
-  defaultValue?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-}) {
+  ...rest
+}: TextFieldProps) {
+  const paddingClass = getPaddingClass(leadingIcon, trailingIcon);
+
   return (
-    <BaseInputWrapper icon={icon} label={label} id={id} className={className}>
-      <input
-        id={id}
-        name={name}
-        type="text"
-        placeholder={placeholder}
-        className="w-full rounded-md border border-gray-200 bg-white py-3 pl-10 outline-none focus:border-blue-400"
-        defaultValue={defaultValue}
-        onChange={onChange}
-        required
-      />
-    </BaseInputWrapper>
+    <InputWrapper
+      leadingIcon={leadingIcon}
+      trailingIcon={trailingIcon}
+      className={className}
+    >
+      <input className={clsx(baseInputClass, paddingClass)} {...rest} />
+    </InputWrapper>
   );
 }
 
-export function SelectInput({
-  icon,
-  label,
-  id,
-  name,
-  values,
+export function OutlinedSelectField({
+  leadingIcon,
+  trailingIcon,
   className,
   placeholder,
-}: BaseProps & {
-  placeholder?: string;
-  values: { value: string; label: string }[];
-}) {
+  options,
+  ...rest
+}: SelectFieldProps) {
+  const paddingClass = getPaddingClass(leadingIcon, trailingIcon);
+
   return (
-    <BaseInputWrapper icon={icon} label={label} id={id} className={className}>
-      <select
-        id={id}
-        name={name}
-        className="w-full cursor-pointer appearance-none rounded-md border border-gray-200 bg-white py-3 pl-10 outline-none focus:border-blue-400"
-        defaultValue=""
-        required
-      >
-        {placeholder && (
-          <option value="" disabled>
-            {placeholder}
-          </option>
-        )}
-        {values.map(({ value, label }) => (
-          <option value={value} key={value}>
-            {label}
+    <InputWrapper
+      leadingIcon={leadingIcon}
+      trailingIcon={trailingIcon}
+      className={className}
+    >
+      <select className={clsx(baseInputClass, paddingClass)} {...rest}>
+        <option value="" disabled>
+          {placeholder}
+        </option>
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
           </option>
         ))}
       </select>
-    </BaseInputWrapper>
+    </InputWrapper>
   );
-}
-
-export function CustomRadioBtn() {
-  return <div></div>;
 }

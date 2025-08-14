@@ -4,6 +4,7 @@ import { generatePagination } from "@/app/lib/utils";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import { leftArrowIcon, rightArrowIcon } from "./icons";
 
 export default function PaginationBar({ totalPages }: { totalPages: number }) {
   const pathname = usePathname();
@@ -81,26 +82,7 @@ function PageArrow({
   href: string;
   isDisabled: boolean;
 }) {
-  const icon = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="size-5"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d={
-          direction === "left"
-            ? "M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-            : "M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-        }
-      />
-    </svg>
-  );
+  const icon = direction === "left" ? leftArrowIcon : rightArrowIcon;
 
   const className = clsx("size-10 rounded-md border border-gray-200 p-2", {
     "mr-3": direction === "left",

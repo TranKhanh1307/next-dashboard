@@ -75,3 +75,14 @@ export function renderMultiple(
 ): ReactNode[] {
   return Array.from({ length: count }, (_, i) => renderFn(i));
 }
+
+// Helper function to calculate input padding based on icons
+export function getPaddingClass(
+  leadingIcon?: ReactNode,
+  trailingIcon?: ReactNode,
+) {
+  if (leadingIcon && trailingIcon) return "pl-10 pr-10";
+  if (leadingIcon) return "pl-10";
+  if (trailingIcon) return "pr-10";
+  return "px-3";
+}

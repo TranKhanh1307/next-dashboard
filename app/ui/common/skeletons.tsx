@@ -4,7 +4,7 @@ import { renderMultiple } from "@/app/lib/utils";
 
 export function CardsSkeleton() {
   return (
-    <CardListWrapper>
+    <CardListWrapper className="animate-pulse">
       {renderMultiple(6, (i) => (
         <CardSkeleton key={i} />
       ))}
@@ -57,7 +57,7 @@ export function ImageNameCellSkeleton() {
 
 export function BaseRow({ children }: { children: ReactNode }) {
   return (
-    <tr className="w-full border-b border-gray-100 last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">
+    <tr className="w-full animate-pulse border-b border-gray-100 last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">
       {children}
     </tr>
   );
