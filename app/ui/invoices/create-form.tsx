@@ -7,14 +7,14 @@ import {
   OutlinedTextField,
 } from "../common/custom-inputs";
 import { dollarIcon, personIcon } from "../common/icons";
+import FormField from "../common/form-field";
 
 export default async function Form() {
   const customers = await fetchCustomers();
   return (
     <form action={createInvoice} className="space-y-4">
       <div className="space-y-3 rounded-md bg-gray-100 p-3">
-        <div>
-          <label htmlFor="customer">Choose customer</label>
+        <FormField label="Choose customer" id="customer">
           <OutlinedSelectField
             placeholder="Select a customer"
             id="customer"
@@ -27,9 +27,8 @@ export default async function Form() {
             defaultValue=""
             required
           />
-        </div>
-        <div>
-          <label htmlFor="amount">Choose amount</label>
+        </FormField>
+        <FormField label="Choose an amount" id="amount">
           <OutlinedTextField
             type="number"
             leadingIcon={dollarIcon}
@@ -38,7 +37,7 @@ export default async function Form() {
             placeholder="Enter USD amount"
             required
           />
-        </div>
+        </FormField>
         <StatusInput />
       </div>
       <div className="flex justify-end gap-2">
@@ -54,8 +53,8 @@ function StatusInput() {
     <fieldset className="space-y-2">
       <legend>Set the invoice status</legend>
       <div className="flex gap-3 rounded-md border border-gray-200 bg-white p-3">
-        <RadioBtn value={"pending"} />
-        <RadioBtn value={"paid"} />
+        <RadioBtn value="pending" />
+        <RadioBtn value="paid" />
       </div>
     </fieldset>
   );
