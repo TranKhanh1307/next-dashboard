@@ -19,9 +19,10 @@ export function EditInvoice({ id }: { id: string }) {
   );
 }
 
-export function DeleteInvoice() {
+export function DeleteInvoice({ id }: { id: string }) {
+  const deleteInvoiceWithId = deleteInvoice.bind(null, id);
   return (
-    <form action={deleteInvoice}>
+    <form action={deleteInvoiceWithId}>
       <OutlinedBtn type="submit" variant="primary">
         {deleteIcon}
       </OutlinedBtn>
