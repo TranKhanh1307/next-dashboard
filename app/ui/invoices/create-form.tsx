@@ -1,13 +1,13 @@
 import { createInvoice } from "@/app/lib/action";
 import Status from "./status";
 import { fetchCustomers } from "@/app/lib/data";
-import { Button } from "../common/custom-buttons";
 import {
   OutlinedSelectField,
   OutlinedTextField,
 } from "../common/custom-inputs";
 import { dollarIcon, personIcon } from "../common/icons";
 import FormField from "../common/form-field";
+import { FilledBtn } from "../common/custom-buttons";
 
 export default async function Form() {
   const customers = await fetchCustomers();
@@ -41,8 +41,12 @@ export default async function Form() {
         <StatusInput />
       </div>
       <div className="flex justify-end gap-2">
-        <Button variant="primary" text="Cancel" />
-        <Button variant="secondary" text="Create invoices" />
+        <FilledBtn href="/dashboard/invoices" variant="secondary">
+          Cancel
+        </FilledBtn>
+        <FilledBtn variant="primary" type="submit">
+          Create invoice
+        </FilledBtn>
       </div>
     </form>
   );

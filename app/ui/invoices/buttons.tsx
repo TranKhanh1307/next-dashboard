@@ -1,38 +1,30 @@
-import Link from "next/link";
 import { deleteIcon, editIcon, plusIcon } from "../common/icons";
+import { FilledBtn, OutlinedBtn } from "../common/custom-buttons";
+import { deleteInvoice } from "@/app/lib/action";
 
 export function CreateInvoice() {
   return (
-    <Link
-      href={"/dashboard/invoices/create"}
-      className="flex items-center justify-center gap-2 rounded-md bg-blue-600 p-3 text-white hover:bg-blue-400"
-    >
+    <FilledBtn variant="primary" href="/dashboard/invoices/create">
       <p className="hidden md:block">Create invoices</p>
       {plusIcon}
-    </Link>
+    </FilledBtn>
   );
 }
 
 export function EditInvoice() {
   return (
-    <Link
-      href={""}
-      className="flex items-center justify-center rounded-md border-[1px] border-gray-200 p-2 hover:bg-gray-400"
-    >
+    <OutlinedBtn href="" variant="primary">
       {editIcon}
-    </Link>
+    </OutlinedBtn>
   );
 }
 
 export function DeleteInvoice() {
   return (
-    <form action="">
-      <button
-        type="submit"
-        className="flex items-center justify-center rounded-md border-[1px] border-gray-200 p-2 hover:bg-gray-400"
-      >
+    <form action={deleteInvoice}>
+      <OutlinedBtn type="submit" variant="primary">
         {deleteIcon}
-      </button>
+      </OutlinedBtn>
     </form>
   );
 }
