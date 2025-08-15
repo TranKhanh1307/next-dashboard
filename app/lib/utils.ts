@@ -86,3 +86,7 @@ export function getPaddingClass(
   if (trailingIcon) return "pr-10";
   return "px-3";
 }
+
+export function getCurDate() {
+  return new Date().toISOString().split("T")[0];
+}

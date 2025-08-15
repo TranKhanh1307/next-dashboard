@@ -38,7 +38,7 @@ function InvoiceCard({ invoice }: { invoice: InvoicesTable }) {
       <div className="mt-4 flex items-center justify-between">
         <InvoiceInfo amount={invoice.amount} date={invoice.date} />
         <div className="flex gap-2">
-          <EditInvoice />
+          <EditInvoice id={invoice.id} />
           <DeleteInvoice />
         </div>
       </div>

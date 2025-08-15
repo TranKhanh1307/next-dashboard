@@ -1,0 +1,26 @@
+import { fetchCustomers, fetchInvoiceById } from "@/app/lib/data";
+import BreadCrumb from "@/app/ui/invoices/breadcrumbs";
+import Form from "@/app/ui/invoices/form";
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const [invoice, customers] = await Promise.all([
+    fetchInvoiceById(id),
+    fetchCustomers(),
+  ]);
+  return (
+    <main className="space-y-8">
+      <BreadCrumb
+        breadcrumbs={[
+          { href: "/dashboard/invoices", label: "Invoices" },
+          { href: `/dashboard/invoices/${id}/edit`, label: "Edit Invoice" },
+        ]}
+      />
+      <Form customers={customers} mode="edit" invoice={invoice} />
+    </main>
+  );
+}

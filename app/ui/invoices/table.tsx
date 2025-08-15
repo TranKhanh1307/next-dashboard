@@ -38,7 +38,7 @@ function InvoiceRow({ invoice }: { invoice: InvoicesTable }) {
       </td>
       <td>
         <div className="flex gap-2">
-          <EditInvoice />
+          <EditInvoice id={invoice.id} />
           <DeleteInvoice />
         </div>
       </td>

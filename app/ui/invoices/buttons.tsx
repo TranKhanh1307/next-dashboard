@@ -11,9 +11,9 @@ export function CreateInvoice() {
   );
 }
 
-export function EditInvoice() {
+export function EditInvoice({ id }: { id: string }) {
   return (
-    <OutlinedBtn href="" variant="primary">
+    <OutlinedBtn href={`/dashboard/invoices/${id}/edit`} variant="primary">
       {editIcon}
     </OutlinedBtn>
   );
