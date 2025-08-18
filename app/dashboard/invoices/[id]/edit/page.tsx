@@ -1,6 +1,7 @@
 import { fetchCustomers, fetchInvoiceById } from "@/app/lib/data";
 import BreadCrumb from "@/app/ui/invoices/breadcrumbs";
 import Form from "@/app/ui/invoices/form";
+import { notFound } from "next/navigation";
 
 export default async function Page({
   params,
@@ -12,6 +13,9 @@ export default async function Page({
     fetchInvoiceById(id),
     fetchCustomers(),
   ]);
+  if (!invoice) {
+    notFound();
+  }
   return (
     <main className="space-y-8">
       <BreadCrumb

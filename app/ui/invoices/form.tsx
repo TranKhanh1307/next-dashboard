@@ -1,4 +1,6 @@
-import { createInvoice, updateInvoice } from "@/app/lib/action";
+"use client";
+
+import { createInvoice, updateInvoice, State } from "@/app/lib/action";
 import Status from "./status";
 import {
   OutlinedSelectField,
@@ -8,8 +10,10 @@ import { dollarIcon, personIcon } from "../common/icons";
 import FormField from "../common/form-field";
 import { FilledBtn } from "../common/custom-buttons";
 import { CustomerField, InvoiceForm } from "@/app/lib/definitions";
+import { useActionState } from "react";
+import FieldError from "../common/field-error";
 
-export default async function Form({
+export default function Form({
   customers,
   mode,
   invoice,
@@ -18,13 +22,17 @@ export default async function Form({
   mode: "create" | "edit";
   invoice?: InvoiceForm;
 }) {
-  const updateInvoiceWithId = invoice && updateInvoice.bind(null, invoice.id);
+  const updateInvoiceWithId =
+    mode === "edit" && invoice
+      ? updateInvoice.bind(null, invoice.id)
+      : undefined;
+
+  const initialState: State = { message: null, errors: {} };
+  const action = mode === "create" ? createInvoice : updateInvoiceWithId!;
+  const [state, formAction] = useActionState(action, initialState);
 
   return (
-    <form
-      action={mode === "create" ? createInvoice : updateInvoiceWithId}
-      className="space-y-4"
-    >
+    <form action={formAction} className="space-y-4">
       <div className="space-y-3 rounded-md bg-gray-100 p-3">
         <FormField label="Choose customer" id="customer">
           <OutlinedSelectField
@@ -37,8 +45,8 @@ export default async function Form({
               label: customer.name,
             }))}
             defaultValue={invoice?.customer_id || ""}
-            required
           />
+          <FieldError id="customer-error" errors={state.errors?.customerId} />
         </FormField>
         <FormField label="Choose an amount" id="amount">
           <OutlinedTextField
@@ -48,10 +56,10 @@ export default async function Form({
             id="amount"
             name="amount"
             placeholder="Enter USD amount"
-            required
           />
+          <FieldError id="amount-error" errors={state.errors?.amount} />
         </FormField>
-        <StatusInput status={invoice?.status} />
+        <StatusInput status={invoice?.status} state={state} />
       </div>
       <div className="flex justify-end gap-2">
         <FilledBtn href="/dashboard/invoices" variant="secondary">
@@ -65,7 +73,13 @@ export default async function Form({
   );
 }
 
-function StatusInput({ status }: { status: "pending" | "paid" | undefined }) {
+function StatusInput({
+  status,
+  state,
+}: {
+  status: "pending" | "paid" | undefined;
+  state: State;
+}) {
   return (
     <fieldset className="space-y-2">
       <legend>Set the invoice status</legend>
@@ -73,6 +87,7 @@ function StatusInput({ status }: { status: "pending" | "paid" | undefined }) {
         <RadioBtn value="pending" checked={status === "pending"} />
         <RadioBtn value="paid" checked={status === "paid"} />
       </div>
+      <FieldError id="status-error" errors={state.errors?.status} />
     </fieldset>
   );
 }
@@ -92,7 +107,6 @@ function RadioBtn({
         id={value}
         value={value}
         defaultChecked={checked}
-        required
       />
       <label htmlFor={value}>
         <Status status={value} />
