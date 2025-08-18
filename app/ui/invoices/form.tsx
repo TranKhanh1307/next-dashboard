@@ -11,7 +11,7 @@ import FormField from "../common/form-field";
 import { FilledBtn } from "../common/custom-buttons";
 import { CustomerField, InvoiceForm } from "@/app/lib/definitions";
 import { useActionState } from "react";
-import FieldError from "../common/field-error";
+import { FieldError, FormErrorMessage } from "../common/form-errors";
 
 export default function Form({
   customers,
@@ -60,6 +60,7 @@ export default function Form({
           <FieldError id="amount-error" errors={state.errors?.amount} />
         </FormField>
         <StatusInput status={invoice?.status} state={state} />
+        <FormErrorMessage message={state.message} />
       </div>
       <div className="flex justify-end gap-2">
         <FilledBtn href="/dashboard/invoices" variant="secondary">
