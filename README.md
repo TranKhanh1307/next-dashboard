@@ -35,6 +35,9 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-```markdown
+## Try it out
+
+Now, try it out. You should be able to log in and out of your application using the following credentials:
+
 - **Email:** `user@nextmail.com`
 - **Password:** `123456`
