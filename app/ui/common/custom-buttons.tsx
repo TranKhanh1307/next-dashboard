@@ -4,11 +4,8 @@ import { ReactNode } from "react";
 
 interface BaseBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
-  onClick?: () => void;
-  disabled?: boolean;
   className?: string;
   variant: "primary" | "secondary";
-  type?: "submit" | "reset" | "button" | undefined;
   children: ReactNode;
 }
 
