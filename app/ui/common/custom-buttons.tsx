@@ -2,7 +2,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { ReactNode } from "react";
 
-interface BaseBtnProps {
+interface BaseBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
   onClick?: () => void;
   disabled?: boolean;

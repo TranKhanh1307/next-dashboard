@@ -1,51 +1,26 @@
 import { getPaddingClass } from "@/app/lib/utils";
 import clsx from "clsx";
-import { ChangeEvent, ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface BaseInputProps {
-  id?: string;
-  name?: string;
-  defaultValue?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-  className?: string;
-  placeholder?: string;
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
-  required?: boolean;
+  className?: string;
 }
 
 interface InputWrapperProps extends BaseInputProps {
   children: ReactNode;
 }
 
-interface TextFieldProps extends BaseInputProps {
-  type:
-    | "button"
-    | "checkbox"
-    | "color"
-    | "date"
-    | "datetime-local"
-    | "email"
-    | "file"
-    | "hidden"
-    | "image"
-    | "month"
-    | "number"
-    | "password"
-    | "radio"
-    | "range"
-    | "reset"
-    | "search"
-    | "submit"
-    | "tel"
-    | "text"
-    | "time"
-    | "url"
-    | "week";
-}
+interface TextFieldProps
+  extends React.InputHTMLAttributes<HTMLInputElement>,
+    BaseInputProps {}
 
-interface SelectFieldProps extends BaseInputProps {
+interface SelectFieldProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement>,
+    BaseInputProps {
   options: { label: string; value: string }[];
+  placeholder?: string;
 }
 
 const baseInputClass =
@@ -118,9 +93,4 @@ export function OutlinedSelectField({
       </select>
     </InputWrapper>
   );
-}
-
-
-export function RadioBtn() {
-  return <div></div>
 }
