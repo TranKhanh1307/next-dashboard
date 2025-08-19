@@ -46,6 +46,7 @@ export default function Form() {
         variant="primary"
         className="w-full"
         aria-disabled={isPending}
+        disabled={isPending}
       >
         <p className="flex-1 text-start">Log in</p>
         {rightArrowIcon}

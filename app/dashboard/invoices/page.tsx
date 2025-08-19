@@ -7,6 +7,11 @@ import { CardsSkeleton } from "@/app/ui/common/skeletons";
 import { TableSkeleton } from "@/app/ui/invoices/skeletons";
 import PaginationBar from "@/app/ui/common/pagination-bar";
 import { fetchInvoicesPages } from "@/app/lib/data";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Invoices",
+};
 
 export default async function Page({
   searchParams,
